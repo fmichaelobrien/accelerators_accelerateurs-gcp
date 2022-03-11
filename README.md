@@ -12,6 +12,8 @@ The `guardails-details` folder contains documentation which describes how compli
 Currently Available Accelerators
 - Guardrails ([link](https://github.com/canada-ca/accelerators_accelerateurs-gcp/tree/main/deployment-templates/Terraform/guardrails))
 
+[![Open this project in Google Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/canada-ca/accelerators_accelerateurs-gcp&page=editor&tutorial=README.md)
+
 ---
 
 ## How to Contribute
