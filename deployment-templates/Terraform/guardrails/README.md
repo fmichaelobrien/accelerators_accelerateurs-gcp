@@ -63,6 +63,35 @@ Run the following to move to the `guardrails` directory if you haven't already.
 cd deployment-templates/Terraform/guardrails/
 ```
 
+### Stage 0 - prerequisites
+
+The super admin account running the guardrails will need the following IAM Role permissions before running the bootstrap.sh script (the script will let you know of any missing roles).
+
+```
+iam.serviceAccountTokenCreator
+resourcemanager.folderAdmin 
+resourcemanager.organizationAdmin 
+orgpolicy.policyAdmin 
+resourcemanager.projectCreator 
+billing.projectManager
+```
+
+Adding these roles can be automated see https://github.com/canada-ca/accelerators_accelerateurs-gcp/issues/42
+
+For now you may run all or parts of the following 6 role additions.
+
+```
+export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+export ORG_ID=$(gcloud projects get-ancestors $PROJECT_ID --format='get(id)' | tail -1)
+export EMAIL=$(gcloud config list --format json|jq .core.account | sed 's/"//g')
+gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/iam.serviceAccountTokenCreator
+gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/orgpolicy.policyAdmin
+gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/resourcemanager.folderAdmin
+gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/resourcemanager.organizationAdmin
+gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/resourcemanager.projectCreator
+gcloud organizations add-iam-policy-binding $ORG_ID  --member=user:$EMAIL --role=roles/billing.projectManager
+```
+
 To execute the bootstrap script run the following command and populate the environment variables "dept" and "your-project" with the correct data.  Note: try to pick a globally distinct "dept" or you may run into existing guardrails deployment conflicts with your project names.  For example "ssc" will likely be used - use ssc-dept-your_initials or ssc-com-mo for example. 
 
 ```
