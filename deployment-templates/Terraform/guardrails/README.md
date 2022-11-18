@@ -1,12 +1,42 @@
 # GCP Accelerator Templates
 
 ## Prerequisites
+We will need the following artifacts at the meeting to proceed. (essentially admin level - domain and BID access)
+1 - a BID (Billing ID) - the shared billing account
+   Note: this BID will need at least 3 open project/billing association quota left - new accounts get 5 default - not normally an issue
 
-- gcloud sdk >= 206.0.0
+2 - the GCP org owning the BID above - where we will add the new SA as a BAA (billing account administrator) 
+
+3 - any Billing Account Administrator cloud identity user on the GCP domain that owns the BID above - to be able to add the new cloud identity account (Admin: super admin, GCP: organization administrator) that bootstraps the new HC org
+   we will need the account below to be added as a BAA on the BID org
+
+4 - a person with any email that will be the new bootstrap cloud identity super admin (root) account on the new HC org - this user will need to configure MFA (defaulting to a phone text)
+  example: super-admin@guardrails.gcp.zone
+
+5 - Pick a domain name for the GCP org - note that this is just an org identifier not a future FQDN frontend for later - it does not have to be used for A and CNAME records later - something like [guardrails.gcp.zone](http://guardrails.gcp.zone/) 
+
+6 - Domain validation: an IT/OPS person or anyone who can add a TXT domain record to the root zone (synchronously - in the meeting) - GCP org onboarding takes 2 min after the TXT record DNS propagates - the record can be removed after we are done - or left
+         example: guardrails.gcp.zone TXT record on the sub domain gcp.zone
+    
+
+### References:
+ Determine cloud profile 1=sandbox: https://github.com/canada-ca/cloud-guardrails/blob/master/EN/00_Applicable-Scope.md#applicability-of-guardrails-to-cloud-usage-profiles
+
+Shared Billing structure: https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/google-cloud-onboarding.md#billing
+
+Identity Onboarding steps: https://github.com/GoogleCloudPlatform/pbmm-on-gcp-onboarding/blob/main/docs/google-cloud-onboarding.md#onboarding-category-3b1-3rd-party-email-account---3rd-party-aws-route53-domain-validation---reuse-existing-billing-account
+
+Example Guardrails install run: https://github.com/canada-ca/accelerators_accelerateurs-gcp/issues/47
+
+Guardrails entrypoint to clone code: https://github.com/canada-ca/accelerators_accelerateurs-gcp#gc-accelerators-gcp
+
+Guardrails instructions we will follow: https://github.com/canada-ca/accelerators_accelerateurs-gcp/blob/main/deployment-templates/Terraform/guardrails/README.md#setting-up-your-environment
+
+### Cloud Shell Defaults
+- gcloud sdk >= 206.0.0 (included in shell.cloud.google.com)
 - gsutil (included in shell.cloud.google.com)
 - Terraform (included in shell.cloud.google.com)
 - git (included in shell.cloud.google.com)
-- A Google Cloud Organization
 
 ## Setting up your Environment
 
