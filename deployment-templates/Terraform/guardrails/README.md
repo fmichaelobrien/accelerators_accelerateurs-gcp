@@ -1,5 +1,5 @@
 # GCP Accelerator Templates
-
+new texzt
 ## Prerequisites
 We will need the following artifacts at the meeting to proceed. (essentially admin level - domain and BID access)
 1 - a BID (Billing ID) - the shared billing account
